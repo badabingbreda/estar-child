@@ -1,0 +1,44 @@
+<header id="header" class="header" role="banner">
+	<div class="header-inner container uk-margin-auto">
+		{# display for desktop #}
+		<div class="uk-visible@s uk-width-1-1 uk-grid-small uk-grid-match" uk-grid>
+			<div class="uk-width-1-1 uk-width-1-3@s uk-width-1-4@m uk-flex uk-flex-middle">
+				{{ tb.get_template_part( 'template-parts/site/logo' ) }}
+				<div class="site-name">
+					{{ tb.get_template_part( 'template-parts/site/title' ) }}
+					{{ tb.get_template_part( 'template-parts/site/description' ) }}
+				</div>
+			</div>
+			<div class="uk-width-1-1 uk-width-2-3@s uk-width-3-4@m">
+				<nav class="uk-navbar-container uk-navbar-transparent" uk-navbar>
+					<div class="nav-overlay uk-navbar-right">
+					{{ tb.uikit_top_menu( 'mainmenu' ) }}
+					</div>
+					<div class="nav-overlay uk-navbar-right">
+
+					        <a class="uk-navbar-toggle" uk-search-icon uk-toggle="target: .nav-overlay; animation: uk-animation-fade" href="#"></a>
+
+					    </div>
+
+					    <div class="nav-overlay uk-navbar-left uk-flex-1" hidden>
+
+					        <div class="uk-navbar-item uk-width-expand">
+					            <form method="GET" action="/" class="uk-search uk-search-navbar uk-width-1-1">
+					                <input name="s" class="uk-search-input" type="search" placeholder="Search..." autofocus>
+					            </form>
+					        </div>
+
+					        <a class="uk-navbar-toggle" uk-close uk-toggle="target: .nav-overlay; animation: uk-animation-fade" href="#"></a>
+
+					    </div>
+				</nav>
+			</div>
+		</div>
+		{# display on mobile #}
+	    <div class="uk-hidden@s uk-navbar-right mobile-nav">
+			<ul class="uk-navbar-nav">
+				<li class=""><a href="#modal-full" uk-toggle><span class="uk-margin-small-right" uk-icon="icon: menu"></span> Menu</a></li>
+			</ul>
+		</div>
+	</div>
+</header>

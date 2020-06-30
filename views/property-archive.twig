@@ -1,0 +1,10 @@
+{% use 'template-property.twig' %}
+{% set archive_view = 'grid_item' %}{# grid_item | list_item -#}
+{{ block('form_filters' , 'template-form-filters.twig' ) }}
+<div class="uk-child-width-1-1 {{ archive_view == 'grid_item' ? 'uk-child-width-1-2@s uk-child-width-1-3@m uk-grid-match uk-grid-small uk-flex uk-flex-center'  }}" uk-grid>
+{% for item in posts %}
+	<div>
+	{{ block( archive_view|default( 'list_item' ) ) }}
+	</div>
+{% endfor %}
+</div>

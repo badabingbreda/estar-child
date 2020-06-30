@@ -1,0 +1,2 @@
+{% use 'template-page-layouts.twig' %}
+{{ block( tb.rwmb_meta( 'pagelayout' ) ) is defined ? block( tb.rwmb_meta( 'pagelayout' ) ) : block( 'nosidebar' ) }}

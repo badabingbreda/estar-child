@@ -1,0 +1,27 @@
+{% block agent_short %}
+<div class="uk-text-center">
+    <div><img src="{{TimberImage(item.thumbnail).src('thumbnail')}}" uk-img class="uk-border-circle"></div>
+    <h4>Agent {{item.title}}</h4>
+    <span style="font-size:0.8em;">
+    {{item.office_phone?'<div><strong>Office</strong><br/>'~item.office_phone ~'</div>':''}}
+    {{item.mobile_phone?'<div><strong>Mobile</strong><br/>'~item.mobile_phone ~'</div>':''}}
+    {{item.fax_phone?'<div><strong>Fax</strong><br/>'~item.fax_phone ~'</div>':''}}
+    {{item.whatsapp?'<div><strong>Whatsapp</strong><br/>'~item.whatsapp ~'</div>':''}}
+    </span>
+</div>
+{% endblock %}
+
+{% block agent_image_left %}
+<div class="uk-flex-middle" uk-grid>
+    <div class="uk-width-1-4@s"><img src="{{TimberImage(item.thumbnail).src('thumbnail')}}" uk-img class="uk-border-circle"></div>
+    <div style="padding-left:10px;" class="uk-width-3-4@s">
+    <h4>Agent {{item.title}}</h4>
+    <span style="font-size:0.8em;">
+    {{item.office_phone?'<div><strong>Office</strong><br/>'~item.office_phone ~'</div>':''}}
+    {{item.mobile_phone?'<div><strong>Mobile</strong><br/>'~item.mobile_phone ~'</div>':''}}
+    {{item.fax_phone?'<div><strong>Fax</strong><br/>'~item.fax_phone ~'</div>':''}}
+    {{item.whatsapp?'<div><strong>Whatsapp</strong><br/>'~item.whatsapp ~'</div>':''}}
+    </span>
+    </div>
+</div>
+{% endblock %}

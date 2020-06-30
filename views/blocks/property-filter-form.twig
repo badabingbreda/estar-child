@@ -1,0 +1,27 @@
+{#
+  Title: Property Filter Form
+  Description: Property Filter Form
+  Category: formatting
+  Context: side
+  Icon: admin-comments
+  Keywords: property home for-sale for-rent filtering search
+  Mode: preview
+  Align: center
+  PostTypes: page post
+  SupportsAlign: left right center wide full
+  SupportsMode: false
+  SupportsMultiple: true
+  Preview:  [ {"hiddenfield" : "" }]
+  Fields: [ { "id" : "hiddenfield" , "type": "hidden", "std": "This block has no settings"  }, { "id" : "hiddenfield2" , "type": "custom_html", "std": "This block has no settings"  } ]
+#}
+{% import "template-form-filters.twig" as macros %}
+<div class="{{ block.classes }}">
+<form action="/property" method="GET" id="form_{{block.id}}" data-target-id="property_filter_results">
+<div class="uk-child-width-1-1 uk-child-width-1-4@s uk-grid-small uk-flex uk-flex-center" uk-grid>
+{# display the network_taxonomies #}
+    <div>{{ macros.fancy_tax_dropdown( 'prop_status' , 'Select Property Status' , false )}}</div>
+    <div><input value="Filter" type="submit" class="uk-button uk-button-primary uk-width-1-1"></div>
+{#  <div><input type="submit" value="refresh"></div>#}
+</div>
+</form>
+</div>

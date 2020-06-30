@@ -1,0 +1,40 @@
+{% import 'wordpress-helpers.twig' as wpmacros %}
+{% use 'template-property.twig' %}
+{% set archive_view = 'grid_item' %}{# grid_item | list_item -#}
+{% if posts|length > 0 %}
+	{# split the results into property and others so we can group them #}
+	{% set property = posts|filter(  v=> v.post_type == 'property' ) %}
+	{% set others = posts|filter(  v=> v.post_type != 'property' ) %}
+	{% if property|length > 0 %}
+	<div class="uk-width-1-1">
+		<h2 class="uk-text-center">Properties matching your search:</h2>
+	</div>
+	<div class="uk-child-width-1-1 {{ archive_view == 'grid_item' ? 'uk-child-width-1-2@s uk-child-width-1-3@m uk-grid-match uk-grid-small uk-flex uk-flex-center'
+	}}" uk-grid>
+	{% for item in property %}
+		<div>
+		{{ block( archive_view|default( 'list_item' ) ) }}
+		</div>
+	{% endfor %}
+	</div>
+	{% else %}
+	{# dont's show anything #}
+	{% endif %}
+
+	{% if others|length > 0 %}
+	<div class="uk-width-1-1 uk-margin-top">
+		<h2 class="uk-text-center">Other results:</h2>
+	</div>
+	{% for item in others %}
+		<div>
+		<h3><a href="{{ item.link }}">{{ item.title }}</a></h3>
+		</div>
+	{% endfor %}
+	</div>
+	{% else %}
+	{# don't show anything #}
+	{% endif %}
+	{{ wpmacros.pagination( posts.pagination ) }}
+{% else %}
+	<h1>Whoops! No results turned up. Try using another search keyword.</h1>
+{% endif %}

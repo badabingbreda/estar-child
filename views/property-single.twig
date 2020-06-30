@@ -1,0 +1,27 @@
+{# load the template blocks for property post type -#}
+{% use 'template-property.twig' %}
+{% set item = post %}
+{# do action before_post_single -#}
+{{ tb.do_action( 'before_post_single' ) -}}
+{# do action before_post_single_{post_type} -#}
+{{ tb.do_action( 'before_post_single_' ~ tb.get_post_type() ) }}
+<div uk-grid>
+	<div class="uk-width-1-1">
+		{{ block( 'property_title' ) }}
+		{{ block( 'big_thumbnav' ) }}
+	</div>
+	<div class="uk-width-3-4@s uk-width-1-1">
+		<div class="uk-child-width-1-1" uk-grid>
+		{% for blockname in [ 'property_id', 'prop_numbers' , 'description' , 'features' , 'additional_details' , 'map' ] %}
+		{{ block( blockname ) }}
+		{% endfor %}
+		</div>
+	</div>
+	<div class="uk-width-1-4@s uk-width-1-1">
+		{{ tb.do_action( 'sidebar_' ~ tb.get_post_type() ) }}
+	</div>
+</div>
+{# do action after_post_single_{post_type} -#}
+{{ tb.do_action( 'after_post_single_' ~ tb.get_post_type() ) }}
+{# do action after_post_single -#}
+{{ tb.do_action( 'after_post_single' ) -}}

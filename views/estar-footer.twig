@@ -1,0 +1,13 @@
+<div id="modal-full" class="uk-modal-full" uk-modal>
+    <div class="uk-modal-dialog">
+        <button class="uk-modal-close-full uk-close-large" type="button" uk-close></button>
+        <div class="uk-grid-collapse uk-child-width-1-1@s uk-flex-middle" uk-grid uk-height-viewport>
+            <div class="uk-padding-large">
+				{% if ( tb.has_nav_menu( 'menu-1' ) ) -%}
+				<h3>{{ __('Menu', 'modal-menu')  }}</h3>
+				{% endif %}
+				{{ tb.uikit_modal_menu( 'mainmenu' ) }}
+            </div>
+        </div>
+    </div>
+</div>

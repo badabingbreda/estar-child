@@ -1,0 +1,32 @@
+{% use "template-property.twig" %}
+{% set connected = tb.mb_get_connected( { 'id': 'property_to_agent' , 'to' : post.id , 'returnas': 'ids' } ) %}
+<div class="uk-grid-match uk-flex uk-flex-middle" uk-grid>
+	<div class="uk-flex-1-5@s">
+		<img src="{{ TimberImage( post.thumbnail ).src( 'thumbnail' ) }}" width="150" height="150">
+	</div>
+	<div class="uk-width-4-5@s">
+		<h2 class="uk-margin-remove-bottom">{{ post.title }}</h2>
+		<div>Listed properties: {{ connected|length ? : 'None' }}</div>
+
+	</div>
+	<div class="uk-width-1-1">
+		{{ post.content }}
+	</div>
+	<div class="uk-width-1-1">
+		{{ post.office_phone ? "<div>Office: #{post.office_phone}</div>" : "" }}
+		{{ post.fax_phone ? "<div>Fax: #{post.fax_phone}</div>" : "" }}
+		{{ post.mobile_phone ? "<div>Mobile: #{post.mobile_phone}</div>" : "" }}
+		{{ post.whatsapp ? "<div>Whatsapp: #{post.whatsapp}</div>" : "" }}
+	</div>
+</div>
+{% if connected|length > 0 %}
+	<div class="uk-margin-top"><h3>My listings</h3></div>
+	<div class="uk-child-width-1-1 uk-grid-small uk-grid-match" uk-grid>
+	{% for item in connected %}
+		{% set item = Post( item ) %}
+			<div>
+				{{ block( 'list_item' ) }}
+			</div>
+	{% endfor %}
+	</div>
+{% endif %}

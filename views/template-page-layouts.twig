@@ -1,0 +1,24 @@
+{% block nosidebar %}
+<div class="uk-grid uk-margin-auto uk-container uk-container-medium">
+	<div class="uk-width-1-1">
+		<h1>{{ post.title }}</h1>
+		{{ tb.do_action( 'pre_post' ) }}
+		{{ tb.get_the_content( null,false,post.id) }}
+		{{ tb.do_action( 'post_post' ) }}
+	</div>
+</div>
+{% endblock %}
+
+{% block sidebar %}
+<div class="uk-grid uk-margin-auto uk-container uk-container-medium">
+	<div class="uk-width-3-4@s">
+		<h1>{{ post.title }}</h1>
+		{{ tb.do_action( 'pre_post' ) }}
+		{{ tb.get_the_content( null,false,post.id) }}
+		{{ tb.do_action( 'post_post' ) }}
+	</div>
+	<div class="uk-child-1-4@s">
+		{{ tb.do_action( 'site_sidebar' ) }}
+	</div>
+</div>
+{% endblock %}

@@ -1,0 +1,18 @@
+{#
+	Add pagination based on the posts.pagination variable in the main Timber Query post.
+	usage:
+	{% import 'wordpress-helpers.twig' as wpmacros %}
+
+	{{ wpmacros.pagination( posts.pagination ) }}
+#}
+{% macro pagination( pagination ) %}
+	{% if pagination.total > 0 %}
+	<div class="uk-text-center uk-width-1-1 pagination">
+		<ul class="uk-subnav uk-subnav-pill uk-flex uk-flex-center uk-flex-wrap uk-grid-small">
+		{% for link in pagination.pages %}
+		<li{{ pagination.current == link.name ? ' class="uk-active"' }}><a href="{{ link.link }}" data-page="{{link.name}}">{{link.name}}</a></li>
+		{% endfor %}
+		</ul>
+	</div>
+	{% endif %}
+{% endmacro %}

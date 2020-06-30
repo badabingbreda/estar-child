@@ -1,0 +1,276 @@
+{# archive list_item #}
+{% block list_item %}
+	<div class="uk-card uk-card-default uk-grid-collapse uk-margin" uk-grid>
+        <div class="uk-card-media-left uk-background-cover uk-width-3-10@s uk-inline-clip uk-transition-toggle" style="background-image: url({{TimberImage(item.thumbnail.ID).src('medium')}})">
+            <a href="{{item.link}}" style="display:block;width:100%;height:100%;"> </a>
+            <div class="uk-transition-fade uk-position-cover uk-overlay uk-padding-small estar-overlay-default uk-margin-remove uk-inline">
+                <div class="uk-position-center">
+                    <a href="{{ item.link }}" class="uk-button uk-button-default estar-button">View property</a>
+                </div>
+            </div>
+        </div>
+        <div class="uk-width-5-10@s">
+            <div style="margin:20px;">
+                <h4 class="property-title"><a href="{{item.link}}">{{item.title}}</a></h4>
+                {{ block( 'prop_numbers_short' ) }}
+            </div>
+        </div>
+        <div class="uk-width-2-10@s" style="border-left:1px dotted #c1c1c1;">
+            <div style="margin:10px;">
+                <div>
+                    <div class="property-status">{{ tb.get_the_terms( item.id , 'prop_status' )|first.name }}</div>
+                    <div class="property-price">$ {{ item.asking_price|number_format(0 , '.' , ',' ) }}</div>
+                    {% if function('get_the_terms' , item.ID , 'prop_status')|first.slug == 'for-rent' %}
+                    <div class="property-price-frequency">{{ item.rent_frequency }}</div>
+                    {% endif %}
+                </div>
+                {% if post.type == 'agent' %}
+                <div style="position:absolute;bottom:10px;"><span style="font-size:0.85em;">by</span><br>
+                <span style="font-size:0.85em;font-weight:700;">{{post.title}}</span></div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block grid_item %}
+    <div class="uk-card uk-card-default uk-grid-collapse uk-margin" uk-grid>
+        <div class="uk-card-media-top uk-background-cover uk-width-1-1 uk-inline-clip uk-transition-toggle">
+            <a href="{{ not tb.is_admin() ? item.link : '#' }}">
+                <img data-src="{{ TimberImage(item.thumbnail.ID).src('medium') }}" width="100%" uk-img>
+            </a>
+            <div class="uk-transition-fade uk-position-cover uk-overlay uk-padding-small estar-overlay-default uk-margin-remove uk-inline">
+                <div class="uk-position-center">
+                    <a href="{{ not tb.is_admin() ? item.link : '#' }}" class="uk-button uk-button-default estar-button">View property</a>
+                </div>
+            </div>
+        </div>
+        <div class="uk-width-1-1 uk-padding-small">
+            <div>
+                <h4 class="property-title"><a href="{{ not tb.is_admin() ? item.link : '#' }}">{{item.title}}</a></h4>
+                {{ block( 'prop_numbers_short' ) }}
+            </div>
+            <div>
+                <div class="property-status">{{ tb.get_the_terms( item.id , 'prop_status' )|first.name }}</div>
+                <div class="property-price">$ {{ item.asking_price|number_format(0 , '.' , ',' ) }}</div>
+                {% if function('get_the_terms' , item.ID , 'prop_status')|first.slug == 'for-rent' %}
+                <div class="property-price-frequency">{{ item.rent_frequency }}</div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block big_featured_image %}
+<div class="property-featured-image">
+    <img data-src="{{ TimberImage( post.thumbnail ).src( 'original' ) }}" uk-img title="{{ TimberImage( post.thumbnail ).title }}" width="{{ TimberImage( post.thumbnail ).src( 'original' ).width }}" height="auto">
+</div>
+{% endblock %}
+
+{% block big_slideshow %}
+<div class="uk-position-relative uk-visible-toggle uk-light" tabindex="-1" uk-slideshow>
+    <ul class="uk-slideshow-items">
+        <li>
+            <div class="uk-cover-container">
+                <canvas width="4000" height="3000"></canvas>
+                <img src="{{ TimberImage( item.thumbnail ).src( 'original' ) }}" srcset="{{ TimberImage( item.thumbnail ).srcset }}" sizes="(max-width: 650px) 650px, 100vw" title="{{ TimberImage( item.thumbnail ).title }}" uk-cover>
+            </div>
+        </li>
+        {% if item.property_images -%}
+        {% for image in item.property_images %}
+        <li>
+            <div class="uk-cover-container">
+                <canvas width="4000" height="3000"></canvas>
+                <img data-src="{{ TimberImage( image ).src( 'original' ) }}" data-srcset="{{ TimberImage( image ).srcset }}" sizes="(max-width: 650px) 650px, 100vw" uk-img title="{{ TimberImage( image ).title }}" uk-cover>
+            </div>
+        </li>
+        {% endfor %}
+        {% endif %}
+    </ul>
+    <a class="uk-position-center-left uk-position-small uk-hidden-hover" href="#" uk-slidenav-previous uk-slideshow-item="previous"></a>
+    <a class="uk-position-center-right uk-position-small uk-hidden-hover" href="#" uk-slidenav-next uk-slideshow-item="next"></a>
+</div>
+{% endblock %}
+
+{% block big_thumbnav %}
+<div class="uk-position-relative uk-visible-toggle uk-light" tabindex="-1" uk-slideshow>
+    <ul class="uk-slideshow-items">
+        <li>
+            <div class="uk-cover-container">
+                <canvas width="4000" height="3000"></canvas>
+                <img src="{{ TimberImage( item.thumbnail ).src( 'original' ) }}" srcset="{{ TimberImage( item.thumbnail ).srcset }}" sizes="(max-width: 650px) 650px, 100vw" title="{{ TimberImage( item.thumbnail ).title }}" width="{{ TimberImage( post.thumbnail ).src( 'original' ).width }}" uk-cover>
+            </div>
+        </li>
+        {% if item.property_images -%}
+        {% for image in tb.rwmb_meta( 'property_images' , item.id) %}
+        <li>
+            <div class="uk-cover-container">
+                <canvas width="4000" height="3000"></canvas>
+                <img src="{{ TimberImage( image ).src( 'original' ) }}" srcset="{{ TimberImage( image.ID ).srcset }}" sizes="(max-width: 650px) 650px, 100vw" title="{{ TimberImage( image.ID ).title }}" uk-cover>
+            </div>
+        </li>
+        {% endfor %}
+        {% endif %}
+    </ul>
+    {% if item.property_images -%}
+    <div class="uk-position-bottom-center uk-margin-small-bottom uk-visible@s">
+        <ul class="uk-thumbnav">
+            <li uk-slideshow-item="0">
+                <a href="#" class="uk-cover-container">
+                    <canvas width="100" height="100"></canvas>
+                    <img data-src="{{ TimberImage( item.thumbnail ).src( 'thumbnail' ) }}" uk-img alt="" uk-cover>
+                </a>
+            </li>
+            {% for image in tb.rwmb_meta( 'property_images' , item.id) %}
+            <li uk-slideshow-item="{{ loop.index }}">
+                <a href="#" class="uk-cover-container">
+                    <canvas width="100" height="100"></canvas>
+                    <img data-src="{{ TimberImage( image.ID ).src( 'thumbnail' ) }}" uk-img alt="" uk-cover>
+                </a>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="uk-hidden@s">
+    <a class="uk-position-center-left uk-position-small" href="#" uk-slidenav-previous uk-slideshow-item="previous"></a>
+    <a class="uk-position-center-right uk-position-small" href="#" uk-slidenav-next uk-slideshow-item="next"></a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block property_title %}
+<div class="uk-flex uk-flex-stretch uk-grid-small uk-margin" uk-grid>
+    <div class="uk-flex-1 uk-width-4-5@s">
+        <h1 class="property-title">{{ item.title }}</h1>
+        <div class="property-address">{{ item.propertymap_address }}</div>
+    </div>
+    <div class="uk-flex-none uk-visible@s">
+        <hr class="uk-divider-vertical">
+    </div>
+    <div class="uk-width-1-5@s">
+        <div class="property-status">{{ tb.get_the_terms( item.id , 'prop_status' )|first.name }}</div>
+        <div class="property-price">$ {{ item.asking_price|number_format(0 , '.' , ',' ) }}</div>
+        {% if function('get_the_terms' , item.ID , 'prop_status')|first.slug == 'for-rent' %}
+        <div class="property-price-frequency">{{ item.rent_frequency }}</div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
+
+{% block property_id %}
+<div class="property-id">
+    <p>property ID: <span>{{ item.property_id }}</span></p>
+</div>
+{% endblock %}
+
+
+{% block prop_numbers %}
+    <div class="property-numbers">
+        <div class="uk-flex-left@s" uk-grid>
+        {% if item.bedrooms > 0 %}
+            <div style="margin:5px">
+                <h5>Bedrooms</h5>
+                <img src="{{ constant( 'ESTAR_CHILD_THEME_URL' ) }}/assets/bedroom.svg" width="24" uk-img><span style="margin-left:10px;">{{item.bedrooms}}</span>
+            </div>
+        {% endif %}
+        {% if item.bathrooms > 0 %}
+            <div style="margin:5px">
+                <h5>Bathrooms</h5>
+                <img src="{{constant( 'ESTAR_CHILD_THEME_URL' ) }}/assets/bathroom.svg" width="24" uk-img><span style="margin-left:10px;">{{item.bathrooms}}</span>
+            </div>
+        {% endif %}
+        {% if item.area_sqft > 0 %}
+            <div style="margin:5px">
+                <h5>Area</h5>
+                <img src="{{ constant( 'ESTAR_CHILD_THEME_URL' ) }}/assets/area.svg" width="24" uk-img><span style="margin-left:10px;">{{item.area_sqft}} Sq ft</span>
+            </div>
+        {% endif %}
+        {% if item.garage_spaces > 0 %}
+            <div style="margin:5px">
+                <h5>Garage Space</h5>
+                <img src="{{ constant( 'ESTAR_CHILD_THEME_URL' ) }}/assets/garage.svg" width="24" uk-img><span style="margin-left:10px;">{{item.garage_spaces}}</span>
+            </div>
+        {% endif %}
+        {% if item.year_built > 0 %}
+            <div style="margin:5px">
+                <h5>Year Built</h5>
+                <img src="{{ constant( 'ESTAR_CHILD_THEME_URL' ) }}/assets/calendar.svg" width="24" uk-img><span style="margin-left:10px;">{{item.year_built}}</span>
+            </div>
+        {% endif %}
+        {% if item.lot_size > 0 %}
+            <div style="margin:5px">
+                <h5>Lot size</h5>
+                <img src="{{ constant( 'ESTAR_CHILD_THEME_URL' ) }}/assets/lotsize.svg" width="24" uk-img><span style="margin-left:10px;">{{item.lot_size}} Sq ft</span>
+            </div>
+        {% endif %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block prop_numbers_short %}
+    <div class="property-numbers">
+        <div class="uk-flex">
+        {% if item.bedrooms > 0 %}
+            <div style="margin:5px">
+                <h5>Bedrooms</h5>
+                <img src="{{ constant( 'ESTAR_CHILD_THEME_URL' ) }}/assets/bedroom.svg" width="24" uk-img><span style="margin-left:10px;">{{item.bedrooms}}</span>
+            </div>
+        {% endif %}
+        {% if item.bathrooms > 0 %}
+            <div style="margin:5px">
+                <h5>Bathrooms</h5>
+                <img src="{{constant( 'ESTAR_CHILD_THEME_URL' ) }}/assets/bathroom.svg" width="24" uk-img><span style="margin-left:10px;">{{item.bathrooms}}</span>
+            </div>
+        {% endif %}
+        {% if item.area_sqft > 0 %}
+            <div style="margin:5px">
+                <h5>Area</h5>
+                <img src="{{ constant( 'ESTAR_CHILD_THEME_URL' ) }}/assets/area.svg" width="24" uk-img><span style="margin-left:10px;">{{item.area_sqft}} Sq ft</span>
+            </div>
+        {% endif %}
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block description %}
+    <div class="property-description">
+    <h4>{{ __( 'Description' , 'text-domain' ) }}</h4>
+    {{ item.post_content }}
+    </div>
+{% endblock %}
+
+{% block features %}
+    {% if item.features|length > 0 %}
+    <div class="property-features">
+        <h4>{{ __( 'Features' , 'text-domain' ) }}</h4>
+        <div class="uk-child-width-1-3@s uk-child-width-1-1 uk-grid-small" uk-grid>
+        {% for feature in item.features %}
+            <div><span uk-icon="check"></span> {{ feature }}</div>
+        {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+{% endblock %}
+
+{% block additional_details %}
+    {% if item.additional_details|length > 0 %}
+    <div class="property-additional-details">
+        <h4>{{ __( 'Additional Details' , 'text-domain' ) }}</h4>
+        <div class="uk-child-width-1-3@s uk-child-width-1-1 uk-grid-small" uk-grid>
+        {% for detail in item.additional_details %}
+                <div><span uk-icon="plus-circle"></span> {{detail }}</div>
+        {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+{% endblock %}
+
+{% block map %}
+    {% if item.propertymap %}
+        <div class="property-map">
+            {{ tb.rwmb_meta( 'propertymap' , { 'width': '100%', 'height' : '300px' , 'zoom': 18, 'marker': true } )}}
+        </div>
+    {% endif %}
+{% endblock %}
